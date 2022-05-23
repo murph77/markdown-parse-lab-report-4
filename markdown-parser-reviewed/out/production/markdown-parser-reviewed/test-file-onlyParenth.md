@@ -1,3 +1,0 @@
-# only parentheses 
-
-(hello world!)
