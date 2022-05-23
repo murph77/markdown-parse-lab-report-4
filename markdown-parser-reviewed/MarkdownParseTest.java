@@ -3,10 +3,11 @@ import static org.junit.Assert.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
 import java.util.List;
-
 import org.junit.*;
+import java.util.ArrayList;
+
+
 
 public class MarkdownParseTest {  // class for tests 
 
@@ -41,5 +42,33 @@ public class MarkdownParseTest {  // class for tests
         Path filePath = Path.of("file-backward.md");
         String fileContent = Files.readString(filePath);
         assertEquals("Check doesnt get link", List.of("https://www.google.com/"), MarkdownParse.getLinks(fileContent));
+    }
+
+    @Test
+    public void testSnippet1() throws Exception {
+        String fileContents = Files.readString(Path.of("snippet1.md"));
+        ArrayList<String> testResult = new ArrayList<>();
+        List<String> expectedResult = List.of("`google.com","google.come","ucsd.edu");
+        testResult = MarkdownParse.getLinks(fileContents);
+        assertEquals(expectedResult, testResult);
+    }
+
+    @Test
+    public void testSnippet2() throws Exception {
+        String fileContents = Files.readString(Path.of("snippet2.md"));
+        ArrayList<String> testResult = new ArrayList<>();
+        List<String> expectedResult = List.of("a.com","a.come(())","example.com");
+        testResult = MarkdownParse.getLinks(fileContents);
+        assertEquals(expectedResult, testResult);
+    }
+
+    @Test
+    public void testSnippet3() throws Exception {
+        String fileContents = Files.readString(Path.of("snippet3.md"));
+        ArrayList<String> testResult = new ArrayList<>();
+        List<String> expectedResult = List.of
+                ("https://sites.google.com/eng.ucsd.edu/cse-15l-spring-2022/schedule");
+        testResult = MarkdownParse.getLinks(fileContents);
+        assertEquals(expectedResult, testResult);
     }
 }
